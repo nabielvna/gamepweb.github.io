@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
-        colorChangeInterval = 2500 - (level - 1) * 500;
+        colorChangeInterval = 3000 - (level - 1) * 500;
 
         let changeColorCounter = 0;
         const maxChangeColorCount = colorChangeCount;
