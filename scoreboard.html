@@ -1,108 +1,67 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-  <title>Scoreboard</title>
-  <style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: rgb(86, 86, 86);
-    }
-
-    header {
-        background-color: gray;
-        color: #fff;
-        padding: 10px 0;
-        text-align: center;
-    }
-
-    nav ul {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-    }
-
-    nav ul li {
-        display: inline;
-        margin-right: 10px;
-    }
-
-    nav ul li a {
-        color: #fff;
-        text-decoration: none;
-    }
-
-    main {
-        margin: 20px;
-        text-align: center;
-    }
-
-    h1 {
-        color: #fff;
-    }
-
-    #score-list {
-        list-style-type: none;
-        padding: 0;
-    }
-
-    #score-list li {
-        background-color: #fff;
-        padding: 10px;
-        margin-bottom: 5px;
-        border-radius: 5px;
-    }
-  </style>
+    <title>Scoreboard</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
-  <header>
-    <nav>
-      <ul>
-        <li><a href="#" id="scoreboard-link">Scoreboard</a></li>
-        <li><a href="game.html" id="">Game</a></li>
-        <li><a href="index.html" id="logout" onclick="logout()">Logout</a></li>
-      </ul>
-    </nav>
-  </header>
-  <main>
-    <div id="content">
-      <h1>Scoreboard</h1>
-      <ul id="score-list">
-      </ul>
-    </div>
-  </main>
-  <script>
-    function logout() {
-      localStorage.clear();
-    }
+    <header class="bg-dark py-1">
+        <nav class="container d-flex justify-content-center">
+            <ul class="nav">
+                <li class="nav-item"><a class="nav-link text-white" href="#" id="scoreboard-link">Scoreboard</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="game.html">Game</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="index.html" id="logout" onclick="logout()">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
 
-    document.addEventListener('DOMContentLoaded', function () {
-      var userToken = localStorage.getItem('userToken');
+    <main class="container">
+        <div class="text-center my-2 py-2">
+            <h1>Scoreboard</h1>
+        </div>
+        <ul id="score-list" class="list-unstyled"></ul>
+    </main>
 
-      if (!userToken) {
-        window.location.href = 'index.html';
-      }
-    });
-    const scoreList = document.getElementById('score-list');
+    <!-- Include Bootstrap JS and Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-    function fetchDataFromAPI() {
-      fetch('https://ets-pemrograman-web-f.cyclic.app/scores/score')
-        .then(response => response.json())
-        .then(data => {
-          data.data.forEach(score => {
-            const listItem = document.createElement('li');
-            listItem.textContent = `${score.nama}: ${score.score}`;
-            scoreList.appendChild(listItem);
-          });
-        })
-        .catch(error => {
-          console.error('Terjadi kesalahan:', error);
+    <script>
+        function logout() {
+            localStorage.clear();
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var userToken = localStorage.getItem('userToken');
+
+            if (!userToken) {
+                window.location.href = 'index.html';
+            }
         });
-    }
 
-    fetchDataFromAPI();
-  </script>
+        const scoreList = document.getElementById('score-list');
+
+        function fetchDataFromAPI() {
+            fetch('https://ets-pemrograman-web-f.cyclic.app/scores/score')
+                .then(response => response.json())
+                .then(data => {
+                    data.data.forEach(score => {
+                        const listItem = document.createElement('li');
+                        listItem.classList.add('bg-white', 'p-3', 'mb-3', 'rounded', 'shadow');
+                        listItem.textContent = `${score.nama}: ${score.score}`;
+                        scoreList.appendChild(listItem);
+                    });
+                })
+                .catch(error => {
+                    console.error('Terjadi kesalahan:', error);
+                });
+        }
+
+        fetchDataFromAPI();
+    </script>
 </body>
 
 </html>

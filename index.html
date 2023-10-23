@@ -1,120 +1,128 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-  <title>Login Page</title>
-  <style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: rgb(86, 86, 86);
-        text-align: center;
-        margin: 0;
-    }
+    <title>Login Page</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            height: 100vh; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+        }
 
-    h2 {
-        color: #fff;
-    }
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
 
-    form {
-        max-width: 400px;
-        margin: 20px auto;
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
+        .card-header {
+            background-color: #007bff;
+            color: #fff;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            border-bottom: none;
+            border-radius: 10px 10px 0 0;
+        }
 
-    label,
-    input {
-        display: block;
-        width: 100%;
-        margin-bottom: 10px;
-    }
+        .form-control {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
 
-    input[type="text"],
-    input[type="password"] {
-        padding: 10px;
-        font-size: 16px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-    }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+        }
 
-    input[type="submit"] {
-        background-color: #333;
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        font-size: 16px;
-        border-radius: 5px;
-        cursor: pointer;
-    }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
 
-    input[type="submit"]:hover {
-        background-color: #555;
-    }
+        .text-danger {
+            font-size: 16px;
+        }
 
-    p#loginResult {
-        color: #ff0000;
-    }
-
-    a {
-        color: black;
-        text-decoration: none;
-    }
-
-  </style>
+        .text-center a {
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
 </head>
 
 <body>
-  <h2>Login</h2>
-  <form id="loginForm">
-    <label for="email">Email:</label>
-    <input type="text" id="email" name="email" required><br><br>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <h2 class="card-header">Login</h2>
+                    <div class="card-body">
+                        <form id="loginForm">
+                            <div class="form-group">
+                                <label for="email">Email:</label>
+                                <input type="text" class="form-control" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password:</label>
+                                <input type="password" class="form-control" id="password" name="password" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Login</button>
+                            <p id="loginResult" class="text-danger mt-3"></p>
+                        </form>
+                        <p class="text-center">Belum Punya Akun ? <a href="register.html">Buat akun</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required><br><br>
+    <!-- Include Bootstrap JS and Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-    <input type="submit" value="login">
-    <p id="loginResult"></p>
+    <script>
+        var docRes = document.getElementById("loginResult");
 
-    <p>Belum Punya Akun ?</p>
-    <a href="register.html">Buat akun</a>
-  </form>
+        document.getElementById('loginForm').addEventListener('submit', function (event) {
+            event.preventDefault();
 
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
 
-  <script>
-    var docRes = document.getElementById("loginResult");
-
-    document.getElementById('loginForm').addEventListener('submit', function (event) {
-      event.preventDefault();
-
-      var email = document.getElementById('email').value;
-      var password = document.getElementById('password').value;
-
-      fetch('https://ets-pemrograman-web-f.cyclic.app/users/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            email: email,
-            password: password
-          })
-        })
-
-        .then(response => response.json())
-        .then(data => {
-          console.log(data);
-          if (data.status == "success") {
-            localStorage.setItem('userToken', data.data.access_token);
-            window.location.href = 'scoreboard.html';
-          } else {
-            docRes.textContent = "Login Gagal " + data.error
-          }
-        })
-        .catch(error => console.error('Error:', error));
-    });
-  </script>
+            fetch('https://ets-pemrograman-web-f.cyclic.app/users/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        password: password
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    if (data.status == "success") {
+                        localStorage.setItem('userToken', data.data.access_token);
+                        window.location.href = 'scoreboard.html';
+                    } else {
+                        docRes.textContent = "Login Gagal " + data.error;
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
 
 </body>
 

@@ -1,25 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <title>Whack a Color</title>
 </head>
+
 <body>
-    <div class="game-container">
-        <h1>Whack a Color</h1>
-        <div>
-            <label for="username">Nama Pengguna:</label>
-            <input type="text" id="username" required>
+    <div class="container my-5">
+        <div class="text-center">
+            <h1>Whack a Color</h1>
+            <div class="level mb-1"><h4>Level: <span id="level">1</span></h3></div>
+            <div class="lives mb-3"> Lives: <span id="lives">3</span> | Time left: <span id="timer">10</span>s | Score: <span id="score">0</span></div>
+            <div class="wrapper">
+                <div class="grid" id="grid"></div>
+            </div>
+
+            <div class="floating-window text-left" id="rulesContent">
+                <h3 class="text-center">Panduan</h3>
+                <h5>Tiles</h5>
+                <p>
+                    1. Hijau  : <br> +200 score <br>
+                    2. Biru   : <br> -100 score <br>
+                    3. Kuning : <br> -100 score + acak warna <br>
+                    4. Merah  : <br> -200 score + acak warna + -1 live
+                </p>
+                <h5>Sistem game</h5>
+                <p>
+                    1. Setiap level memiliki waktu 10s <br>
+                    2. Pergantian warna akan semakin cepat seiring bertambahnya level <br>
+                    3. permainan akan selesai ketika telah mencapai level 5 atau ketika live habis
+                </p>
+                <button class="btn btn-secondary" id="closeRules">Tutup</button>
+            </div>
+
+            <div class="form-group">
+                <label for="username">Nama:</label>
+                <input type="text" class="form-control" id="username" required>
+            </div>
+            <button class="btn btn-info" id="rules">📜 Panduan</button>
+            <button class="btn btn-primary" id="start">Start Game</button>
+            <button class="btn btn-danger" id="reset">Reset Game</button>
         </div>
-        <div class="level">Level: <span id="level">1</span></div>
-        <div class="score">Score: <span id="score">0</span></div>
-        <div class="grid" id="grid"></div>
-        <div class="timer">Time left: <span id="timer">10</span>s</div>
-        <button id="start">Start Game</button>
-        <button id="reset">Reset Game</button>
     </div>
     <script src="script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
+
 </html>

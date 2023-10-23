@@ -1,124 +1,130 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-  <title>Register Page</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: rgb(86, 86, 86);
-      text-align: center;
-      margin: 0;
-    }
+    <title>Register</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-    h2 {
-      color: #fff;
-    }
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
 
-    form {
-      max-width: 400px;
-      margin: auto;
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
+        .card-header {
+            background-color: #007bff;
+            color: #fff;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            border-bottom: none;
+            border-radius: 10px 10px 0 0;
+        }
 
-    label,
-    input {
-      display: block;
-      width: 100%;
-      margin-bottom: 10px;
-    }
+        .form-control {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
 
-    input[type="text"],
-    input[type="password"] {
-      padding: 10px;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+        }
 
-    input[type="submit"] {
-      background-color: #333;
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      font-size: 16px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
 
-    input[type="submit"]:hover {
-      background-color: #555;
-    }
-
-    p#registerResult {
-      color: #ff0000;
-    }
-
-    a {
-      color: black;
-      text-decoration: none;
-    }
-  </style>
+        .text-center a {
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
 </head>
 
 <body>
-  <h2>Register</h2>
-  <form id="registerForm">
-    <label for="name">Nama:</label>
-    <input type="text" id="name" name="name" required><br><br>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <h2 class="card-header">Register</h2>
+                    <div class="card-body">
+                        <form id="registerForm">
+                            <div class="form-group">
+                                <label for="name">Nama:</label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email:</label>
+                                <input type="text" class="form-control" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password:</label>
+                                <input type="password" class="form-control" id="password" name="password" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Register</button>
+                        </form>
+                        <p class="text-center mt-3">Sudah Punya Akun ? <a href="index.html">Masuk akun</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <label for="email">Email:</label>
-    <input type="text" id="email" name="email" required><br><br>
+    <!-- Include Bootstrap JS and Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required><br><br>
+    <script>
+        var docRes = document.getElementById("registerResult");
+        document.getElementById("registerForm").addEventListener("submit", function (event) {
+            event.preventDefault();
 
-    <input type="submit" value="register">
-    <p>Sudah Punya Akun ?</p>
-    <a href="index.html">Masuk akun</a>
-  </form>
+            var name = document.getElementById("name").value;
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
 
-  <p id="registerResult"></p>
-
-  <script src="register.js"></script>
-
-  <script>
-    var docRes = document.getElementById("registerResult");
-    document
-      .getElementById("registerForm")
-      .addEventListener("submit", function (event) {
-        event.preventDefault();
-
-        var name = document.getElementById("name").value;
-        var email = document.getElementById("email").value;
-        var password = document.getElementById("password").value;
-
-        fetch("https://ets-pemrograman-web-f.cyclic.app/users/register", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              nama: name,
-              email: email,
-              password: password
-            }),
-          })
-          .then((response) => response.json())
-          .then((data) => {
-            console.log(data);
-            if (data.status == "success") {
-              window.location.href = "index.html"
-            } else {
-              docRes.textContent = "Register Gagal " + data.error
-            }
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-          })
-      });
-  </script>
+            fetch("https://ets-pemrograman-web-f.cyclic.app/users/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    nama: name,
+                    email: email,
+                    password: password
+                }),
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                if (data.status == "success") {
+                    localStorage.setItem('username', name); 
+                    window.location.href = "game.html";
+                } else {
+                    docRes.textContent = "Register Gagal " + data.error
+                }
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            })
+        });
+    </script>
 </body>
+
+</html>
